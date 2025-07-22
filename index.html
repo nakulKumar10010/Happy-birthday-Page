@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Happy Birthday Bhaiya Ji</title>
+  <title>Happy Birthday Chhaya Didi</title>
   <style>
     * {
       box-sizing: border-box;
@@ -12,39 +12,41 @@
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Arial', sans-serif;
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb);
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #ffdde1, #fad0c4);
       height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow: hidden;
+      flex-direction: column;
       text-align: center;
+      overflow: hidden;
     }
 
     #startBtn {
-      padding: 14px 28px;
+      padding: 14px 32px;
       font-size: 1.5rem;
       border: none;
-      border-radius: 12px;
-      background-color: #ff6f91;
+      border-radius: 50px;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
       color: white;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      transition: transform 0.2s ease;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+      z-index: 2;
     }
 
     #startBtn:hover {
-      transform: scale(1.05);
+      transform: scale(1.07);
     }
 
-    .container, .balloons, footer {
+    .container, canvas, .cake, footer {
       display: none;
     }
 
     .visible {
       display: block;
-      animation: fadeIn 1.5s ease-in-out;
+      animation: fadeIn 1.2s ease-in-out;
     }
 
     .container {
@@ -55,119 +57,172 @@
 
     h1 {
       font-size: 2.8rem;
-      text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+      color: #fff;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
       margin-bottom: 10px;
     }
 
     h2 {
-      font-size: 1.5rem;
-      margin-bottom: 20px;
+      font-size: 1.4rem;
+      color: #fff;
     }
 
-    .balloons {
+    .cake {
+      width: 150px;
+      height: 150px;
+      margin: 30px auto;
+      position: relative;
+      animation: bounce 2s infinite;
+    }
+
+    .cake::before, .cake::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      background-color: #fff;
+    }
+
+    .cake::before {
+      width: 150px;
+      height: 60px;
+      background: pink;
+      border: 4px solid #fff;
+      top: 0;
+    }
+
+    .cake::after {
+      width: 20px;
+      height: 40px;
+      background: gold;
+      left: 65px;
+      top: -40px;
+      border-radius: 4px;
+      box-shadow: 0 0 12px 2px orange;
+    }
+
+    footer {
+      color: #fff;
+      font-size: 1rem;
+      margin-top: 20px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    canvas {
       position: absolute;
       top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100%;
-      pointer-events: none;
+      left: 0;
       z-index: 1;
     }
 
-    .balloon {
-      position: absolute;
-      bottom: -150px;
-      width: 60px;
-      height: 90px;
-      border-radius: 50%;
-      animation: floatUp 6s ease-in-out infinite;
-    }
-
-    .balloon:nth-child(1) { left: 10%; background-color: #fbc2eb; animation-delay: 0s; }
-    .balloon:nth-child(2) { left: 30%; background-color: #fad0c4; animation-delay: 1s; }
-    .balloon:nth-child(3) { left: 50%; background-color: #ff9a9e; animation-delay: 2s; }
-    .balloon:nth-child(4) { left: 70%; background-color: #fbc2eb; animation-delay: 3s; }
-    .balloon:nth-child(5) { left: 90%; background-color: #fad0c4; animation-delay: 4s; }
-
-    footer {
-      position: absolute;
-      bottom: 15px;
-      width: 100%;
-      font-size: 1rem;
-      color: #fff;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    }
-
     @keyframes fadeIn {
-      0% { opacity: 0; transform: scale(0.9); }
-      100% { opacity: 1; transform: scale(1); }
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
     }
 
-    @keyframes floatUp {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-300px); }
-      100% { transform: translateY(0); }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
     }
 
-    /* Mobile Optimizations */
     @media (max-width: 600px) {
       h1 {
-        font-size: 2.2rem;
+        font-size: 2rem;
       }
-
       h2 {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
       }
-
       #startBtn {
         font-size: 1.2rem;
         padding: 12px 24px;
       }
-
-      .balloon {
-        width: 40px;
-        height: 60px;
-      }
-
-      footer {
-        font-size: 0.9rem;
+      .cake {
+        width: 120px;
+        height: 120px;
       }
     }
   </style>
 </head>
 <body>
 
-  <button id="startBtn">🎁 Click Me</button>
+  <button id="startBtn">🎁 Tap to Reveal</button>
+
+  <canvas id="confetti-canvas"></canvas>
 
   <div class="container" id="message">
-    <h1>🎉 Happy Birthday Bhaiya Ji! 🎉</h1>
-    <h2>Wishing you endless joy and happiness!</h2>
-  </div>
-
-  <div class="balloons" id="balloons">
-    <div class="balloon"></div>
-    <div class="balloon"></div>
-    <div class="balloon"></div>
-    <div class="balloon"></div>
-    <div class="balloon"></div>
+    <h1>🎉 Happy Birthday Chhaya Didi! 🎉</h1>
+    <h2>"Wishing you a day filled with love, laughter, and all your favorite things. 💖</h2>
+    <div class="cake"></div>
   </div>
 
   <footer id="footer">
-    Developed by Nakul ❤️
+    Made with ❤️ by Nakul
   </footer>
 
   <script>
     const startBtn = document.getElementById('startBtn');
     const message = document.getElementById('message');
-    const balloons = document.getElementById('balloons');
     const footer = document.getElementById('footer');
+    const canvas = document.getElementById('confetti-canvas');
 
     startBtn.addEventListener('click', () => {
       startBtn.style.display = 'none';
       message.classList.add('visible');
-      balloons.classList.add('visible');
       footer.classList.add('visible');
+      canvas.classList.add('visible');
+      startConfetti();
     });
+
+    // Confetti
+    const ctx = canvas.getContext('2d');
+    let pieces = [];
+    let numberOfPieces = 100;
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    function randomColor() {
+      const colors = ['#ff9a9e', '#fad0c4', '#fbc2eb', '#ffdde1', '#ffc3a0'];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    function createPiece() {
+      return {
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height - canvas.height,
+        size: Math.random() * 8 + 4,
+        speed: Math.random() * 3 + 1,
+        color: randomColor(),
+        rotation: Math.random() * 360
+      };
+    }
+
+    function startConfetti() {
+      for (let i = 0; i < numberOfPieces; i++) {
+        pieces.push(createPiece());
+      }
+      requestAnimationFrame(update);
+    }
+
+    function update() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let piece of pieces) {
+        ctx.beginPath();
+        ctx.fillStyle = piece.color;
+        ctx.fillRect(piece.x, piece.y, piece.size, piece.size);
+        ctx.fill();
+        piece.y += piece.speed;
+        if (piece.y > canvas.height) {
+          piece.y = 0;
+          piece.x = Math.random() * canvas.width;
+        }
+      }
+      requestAnimationFrame(update);
+    }
   </script>
 </body>
 </html>
